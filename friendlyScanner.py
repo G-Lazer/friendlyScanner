@@ -3,7 +3,7 @@
 import sys
 import socket
  
-# syntax = python3 friendlyScanner [ipv4]
+# syntax = python3 friendlyScanner.py [ipv4]
  
 try:
     portStart = int(input("\nEnter the starting port: "))
@@ -13,12 +13,18 @@ try:
 except ValueError:
     print("\nYou must input ports by number.")
  
-address = (sys.argv[1])
- 
-for port in range(portStart,portEnd):
-    x = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    socket.setdefaulttimeout(1)
-    response = x.connect_ex((address,port))
-    if response == 0:
-        print("Port {}: Open".format(port))
-    x.close()
+address = socket.gethostbyname(sys.argv[1])
+
+try:
+    
+    for port in range(portStart,portEnd):
+        x = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        socket.setdefaulttimeout(1)
+        response = x.connect_ex((address,port))
+        if response == 0:
+            print("Port {}: Open".format(port))
+        x.close()
+
+except socket.gaierror:
+    print("Couldn't resolve hostname.")
+
