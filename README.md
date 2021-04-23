@@ -1,7 +1,7 @@
 # friendlyScanner
 
 **Goal**: 
-The goal of friendlyScanner is to be a port scanner that walks the user through options for their scan.
+The goal of friendlyScanner is to be a menu driven port scanner.
 
 **Future Release Ideas**: 
 SYN and FIN scanning.
