@@ -1,29 +1,40 @@
-#!/bin/python
+#!/usr/bin/env python3
 
-import sys
 import socket
 
-# syntax = python3 friendlyScanner.py [ipv4]
+def scan_ports(address, start_port, end_port):
+    print(f"\nScanning ports on {address} from {start_port} to {end_port}\n")
 
-try:
-    port_start = int(input("\nEnter the starting port: "))
-    port_end = int(input("Enter the ending port: "))
-    print("\n")
+    for port in range(start_port, end_port + 1):
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+            sock.settimeout(1)
+            result = sock.connect_ex((address, port))
+            if result == 0:
+                print(f"Port {port}: Open")
 
-except ValueError:
-    print("\nYou must input ports by number.")
+def get_address():
+    while True:
+        hostname = input("Enter the IPv4 address or hostname: ")
+        try:
+            address = socket.gethostbyname(hostname)
+            print(f"Resolved hostname to {address}")
+            return address
+        except socket.gaierror:
+            print(f"Could not resolve '{hostname}'. Please enter a valid IPv4 address:")
+            continue
 
-address = socket.gethostbyname(sys.argv[1])
+def main():
+    address = get_address()
 
-try:
+    try:
+        port_start = int(input("Enter the starting port: "))
+        port_end = int(input("Enter the ending port: "))
+    except ValueError:
+        print("\nError: You must input port numbers.")
+        return
 
-    for port in range(port_start, port_end):
-        x = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        socket.setdefaulttimeout(1)
-        response = x.connect_ex((address, port))
-        if response == 0:
-            print("Port {}: Open".format(port))
-        x.close()
+    scan_ports(address, port_start, port_end)
 
-except socket.gaierror:
-    print("Couldn't resolve hostname.\n")
+if __name__ == "__main__":
+    main()
+

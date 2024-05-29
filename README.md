@@ -1,8 +1,8 @@
 # friendlyScanner
 
 **Goal**: 
-The goal of friendlyScanner is to be a menu driven port scanner.
+The goal of friendlyScanner is to be a menu driven port scanner in Python3.
 
 **Planned Updates**: 
 FIN scanning.
-Scanning a subnet by CIDR, and providing an output of open ports for each machine found.
+Scanning a subnet by CIDR.
