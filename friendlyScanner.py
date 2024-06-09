@@ -26,12 +26,17 @@ def get_address():
 def main():
     address = get_address()
 
-    try:
-        port_start = int(input("Enter the starting port: "))
-        port_end = int(input("Enter the ending port: "))
-    except ValueError:
-        print("\nError: You must input port numbers.")
-        return
+    while True:
+        try:
+            port_start = int(input("Enter the starting port: "))
+            port_end = int(input("Enter the ending port: "))
+            if port_start <= port_end:
+                break
+            else:
+                print("The starting port must be less than or equal to the ending port.")
+        except ValueError:
+            print("\nError: You must input port numbers.")
+            return
 
     scan_ports(address, port_start, port_end)
 
